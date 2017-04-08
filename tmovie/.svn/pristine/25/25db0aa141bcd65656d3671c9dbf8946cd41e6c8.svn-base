@@ -1,0 +1,14 @@
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+.bouncelnDown-enter-active, .bouncelnDown-leave-active {
+  transition: all .5s;
+}
+.bouncelnDown-enter, .bouncelnDown-leave-active {
+  opacity: 0;
+  transform: translateY(-100%);
+}

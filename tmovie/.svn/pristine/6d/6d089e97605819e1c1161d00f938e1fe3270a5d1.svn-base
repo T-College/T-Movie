@@ -1,0 +1,8 @@
+export const text = () => 1
+
+export const date = (item,index) =>{
+	if(!!item){
+		let res = item.split(/[-,/\s]/);
+		return res[index];
+	}
+}

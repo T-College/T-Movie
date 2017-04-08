@@ -1,0 +1,175 @@
+<template>
+	<div class="rank">
+		<div class="rank-nav rank-li">
+			<span>信销一区</span>
+			<span>全国排行</span>
+			<span>种类</span>
+			<p>2016/11/24<span></span>2016/11/24</p>
+		</div>
+		<div class="rank-tab rank-li">
+			<span class="ranking">名次</span>
+			<span class="lv">级别</span>
+			<span class="name">负责人</span>
+			<span class="res">放款业绩(元)</span>
+			<span class="rank-icon"></span>
+		</div>
+		<div class="rank-con">
+			<ul>
+				<li v-for="(i,index) in data" class="rank-li">
+					<span class="ranking">{{index}}</span>
+					<span class="lv">{{i.lv}}</span>
+					<span class="name">{{i.name}}</span>
+					<span class="res">{{i.res}}</span>
+					<span class="rank-icon">></span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</template>
+
+<script>
+    export default {
+    	data(){
+    		return {
+    			data:[
+    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			   			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			   			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			]
+    		}
+    	},
+    	mounted(){
+    	}
+    }
+</script>
+
+<style scoped>
+	.rank{
+		background: #fff
+	}
+	.rank-li{
+		height: 38px;
+		line-height: 38px;
+		font-size: 14px;
+		border-bottom:1px solid  #D8D8D8;
+		color: #323232;
+		display: flex;
+		text-align: center;
+	}
+	.rank-con li.active{
+		color: #FF5C00;
+	}
+	.rank-li span{
+		flex: 1;
+		display: inline-block;
+	}
+	.rank-con .rank-icon{
+		color: #323232;
+		opacity: 0;
+		pointer-events:none;
+		flex: none;
+		width: 40px;
+	}
+	.rank-tab.rank-li{
+		font-size: 13px;
+		color: #7E7E7E;
+	}
+	.rank-tab .rank-icon{
+		flex: .4
+	}
+	.rank-nav.rank-li p{
+		flex: 1;
+		font-size: 12px;
+		transform: scale(.8);
+		line-height: 1.8;
+	}
+	.rank-nav{
+		position: fixed;
+		z-index: 100;
+		top: 44px;
+		width: 100%;
+	}
+	.rank-tab{
+		width: 100%;
+		position: fixed;
+		z-index: 9;
+		top: 82px;
+	}
+	.rank-con{
+		position: relative;
+		z-index: 8;
+		margin-top: 126px;
+	}
+</style>

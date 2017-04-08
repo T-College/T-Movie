@@ -1,0 +1,107 @@
+<template>
+  <div class="search-flexbox">
+    <div class="search-flexbox-item">
+      <input type="text" id="custom_id" placeholder="合同编号:">
+      <div class="custom-img">
+        <img src="../../../assets/number.png">
+      </div>
+    </div>
+    <div class="search-flexbox-item">
+      <input type="text" id="custom_name" placeholder="姓名:">
+      <div class="name-img">
+        <img src="../../../assets/name@3x.png">
+      </div>
+    </div>
+    <div id="btn-search" @click="submitSearch">
+      <router-link :to="{path:'/applicationProgress'}">
+      <p>查询</p>
+      </router-link>
+    </div>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  export default {
+    methods:{
+      submitSearch(){
+        alert('提交成功');
+      },
+    },
+  }
+</script>
+
+<style scoped>
+  .search-flexbox {
+    width:94%;
+    text-align: left;
+    margin:29px auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    box-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .search-flexbox-item {
+    width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height:50px;
+  }
+  #custom_id,#custom_name{
+    width: -moz-calc(100% - 65px);
+    width: -webkit-calc(100% - 65px);
+    width: calc(100% - 65px);
+    height:42px;
+    border-radius:20px;
+    border:none;
+    outline: none;
+    position: absolute;
+    padding-left:40px;
+  }
+  #custom_name{
+    margin-top:20px;
+  }
+  .custom-img{
+    position: relative;
+    top:10px;
+    left:15px;
+  }
+  .custom-img img{
+    width:21px;
+    height:20px;
+  }
+  .name-img{
+    position: relative;
+    top:30px;
+    left:15px;
+  }
+  .name-img img{
+    width:21px;
+    height:20px;
+  }
+  #btn-search{
+    width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height:50px;
+    margin-top:50px;
+    border-radius:22px;
+    background:#ff8100;
+    outline:none;
+  }
+  #btn-search p{
+    text-align: center;
+    font-size:18px;
+    padding-top:15px;
+    color:#fff;
+  }
+
+</style>

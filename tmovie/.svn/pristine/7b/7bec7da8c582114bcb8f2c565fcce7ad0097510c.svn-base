@@ -1,0 +1,341 @@
+<template>
+	<div>		
+		<div class="cal-interval">
+            <div>
+                <input type="date" v-model = 'nd.startDate'>
+                <h3>开始日期</h3>
+                <div class="cal-interval-div">
+                    <h2>{{nd.startDate|date(2)||d.day}}</h2>
+                    <p><span>{{nd.startDate|date(1)+1||d.month+1}}月</span><span>{{nd.startDate|date(0)||d.year}}年</span></p>  
+                </div>
+            </div>      
+            <div>
+                <input type="date" v-model = 'nd.endDate'>
+                <h3>结束日期</h3>
+                <div class="cal-interval-div">
+                    <h2>{{nd.endDate|date(2)||d.day}}</h2>
+                    <p><span>{{nd.endDate|date(1)+1||d.month+1}}月</span><span>{{nd.endDate|date(0)||d.year}}年</span></p>  
+                </div>
+            </div>
+        </div>
+        <div class="cal-week">
+            <ul>
+                <li>日</li>
+                <li>一</li>
+                <li>二</li>
+                <li>三</li>
+                <li>四</li>
+                <li>五</li>
+                <li>六</li>
+            </ul>
+        </div>
+        <div class="cal-con" id="aaa">
+            <div class="cal-date">
+                <h3>{{d.year}}年{{d.month+1}}月</h3>
+                <ul>
+                    <li v-for = 'j in d.frist_day_week' class='li-nobor' :style='{width: width+"px"}'>
+                    </li>
+                    <li 
+                    :class="i==d.day||ad.dayArr[i]?'active':''"
+                    v-for='i in d.daylength' 
+                    @click='setactive(i)'  
+                    :style='{
+                    width: width+"px",
+                    background:i==ad.dayStart&&!ad.dayEnd?"#fff":"",
+                    position:i==d.day||(i==ad.dayStart&&!ad.dayEnd)?"relative":"none",
+                    "z-index":i==d.day||(i==ad.dayStart&&!ad.dayEnd)?"1":"none",
+                    "border-top-left-radius":i==ad.dayStart&&!!ad.dayEnd?"50%":"",
+                    "border-bottom-left-radius":i==ad.dayStart&&!!ad.dayEnd?"50%":"",
+                    "border-top-right-radius":i==ad.dayEnd?"50%":"",
+                    "border-bottom-right-radius":i==ad.dayEnd?"50%":"",
+                    }' 
+                    >
+                        <span 
+                        v-if='i==ad.dayStart&&!ad.dayEnd' 
+                        class="aloneDay" 
+                        :style='{
+                            width:width>40?40+"px":width+"px",
+                            height:width>40?40+"px":width+"px",
+                            "margin-left":width>40?-20+"px":-(width/2)+"px",
+                            "margin-top":width>40?-20+"px":-(width/2)+"px",
+                        }
+                        '>{{i}}
+                        </span>
+                        {{i}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="cal-submit" @click="incrementTotal()">选择</p>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankCalendar',
+    	data(){
+    		return {
+    			d:{
+                    year:'',
+                    month:'',
+                    day:'',
+                    daylength:'',
+                    frist_day_week:'',
+                },
+                ad:{
+                    year:'',
+                    month:'',
+                    dayStart:'',
+                    dayEnd:'',
+                    dayArr:[],
+                    dayNow:'',
+                    frist_day_week:'',
+                },
+                nd:{
+                    startDate:'',
+                    endDate:'',
+                },
+    		}
+    	},
+        computed: {
+            datetime(){
+                return +new Date()
+            },
+            width(){
+                return document.querySelector('.cal-week').offsetWidth/7
+            },
+        },
+    	mounted(){
+            const da = new Date(this.datetime);
+            this.init(da);
+            this.touch();
+    	},
+        methods:{
+            init(da){//初始化
+                this.d = {
+                    day:da.getDate(),
+                    month:da.getMonth(),
+                    year:da.getFullYear(),
+                    frist_day_week:this._firstday(),
+                    daylength:this._ndays()[da.getMonth()],
+                }
+                this.ad.dayStart = this.d.day;
+                this.nd.startDate = this.d.year+'-'+this.d.month+'-'+this.d.day;
+            },
+            _isleap(){//闰年判断
+                let res;
+                return (this.d.year % 100 == 0 ? res = (this.d.year % 400 == 0 ? 1 : 0) : res = (this.d.year % 4 == 0 ? 1 : 0));
+            },
+            _firstday() {//当前月星期几
+                return new Date(this.d.year, (this.d.month), 1).getDay();
+            },
+            _ndays () {//当前月天数
+                return [31, 28 + this._isleap(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            },
+            setactive(i){//选择日期
+                if(!!this.ad.dayStart&&!!this.ad.dayEnd){
+                    this.d.day = '';
+                    this.ad.dayStart = '';
+                    this.ad.dayEnd = '';
+                    this.ad.dayArr = [];
+                    return
+                }
+                if(!this.ad.dayStart){
+                    this.ad.dayStart = i;
+                    this.nd.startDate = this.d.day+'-'+this.d.month+'-'+i;
+                    this.ad.dayArr.length = this.d.daylength+1;
+                    this.ad.dayArr.splice(i,1,i);
+                    return
+                }
+                if(this.ad.dayStart==i){
+                    return
+                }
+                if(this.ad.dayStart>i){
+                    alert("结束日期必须大于起始日期,请重新选择");
+                    return
+                }
+                this.ad.dayEnd = i;
+                this.nd.endDate = this.d.day+'-'+this.d.month+'-'+i;
+                this.ad.dayArr.length = this.d.daylength+1;
+                this.ad.dayArr.splice(i,1,i);
+                let len = this.ad.dayStart<this.ad.dayEnd?this.ad.dayEnd-this.ad.dayStart:this.ad.dayStart-this.ad.dayEnd;
+                for(let j = 1;j<len;j++){
+                    let k = this.ad.dayStart<this.ad.dayEnd?this.ad.dayStart+j:this.ad.dayStart-j;
+                    this.ad.dayArr.splice(k,1,k);
+                }
+            },
+            touch(){
+                let _this = this;
+                let arrY = [];
+                let arrTimeStamp = [];
+                let settime = 0;
+                document.addEventListener('touchend',function(e){
+                    arrY = [];
+                    arrTimeStamp = [];
+                    settime = 0;
+                })
+                document.addEventListener('touchmove',function(e){
+                    let y = Math.floor(e.touches[0].pageY);
+                    let timeStamp = e.timeStamp;
+                    arrY.push(y);
+                    arrTimeStamp.push(timeStamp)
+                    let starT = arrTimeStamp[0];
+                    let endT = arrTimeStamp[arrTimeStamp.length-1];
+                    let star = arrY[0];
+                    let end = arrY[arrY.length-1];
+                    let num = star-end;
+                    let time = endT - starT;
+                    if(num== 0||time == 0){
+                        return
+                    }
+                    else if(num>10&&time>10){
+                        if(!settime){
+                        _this.init(new Date(_this.d.year,(_this.d.month+1),_this.d.day));
+                        }
+                        settime++;
+                    }else if(num<-10&&time>10){
+                        if(!settime){
+                        _this.init(new Date(_this.d.year,(_this.d.month-1),_this.d.day));
+                        }
+                        settime++;
+                    }
+                })
+            }
+        },
+    }
+</script>
+
+<style scoped>
+    .cal-interval{
+        height: 106px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: fixed;
+        width: 100%;
+    }
+    .cal-interval:after{
+        content: "";
+        height: 80px;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 1px;
+        background: #E0E0E0;
+    }
+    .cal-interval>div{
+        position: relative;
+        flex:1;
+        box-sizing: border-box;
+    }
+    .cal-interval h3{
+        padding: 13px 0;
+        padding-left: 30px;
+        font-size: 15px;
+        color: #7E7E7E;
+    }
+    .cal-interval .cal-interval-div{
+        box-sizing: border-box;
+        overflow: hidden;
+        clear: both;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cal-interval .cal-interval-div h2{
+        padding-left: 30px;
+        width: 50%;
+        float: left;
+        font-size: 38px;
+        color: #FF5C00;
+        padding-right: 5px;
+        box-sizing: border-box;
+    }
+    .cal-interval .cal-interval-div p {
+        box-sizing: border-box;
+        width: 50%;
+        float: left;
+    }
+    .cal-interval .cal-interval-div p span{
+        line-height: 25px;
+        display: block;
+        font-size: 13px;
+        color: #323232;
+    }
+    .cal-interval input[type='date']{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .cal-week{
+        position: fixed;
+        top: 191px;
+        width: 100%;
+    }
+    .cal-week ul{
+        display: flex;
+        background: #EEEEEE;
+        height: 30px;
+        align-items: center;
+    }
+    .cal-week li{
+        text-align: center;
+        flex:1;
+        font-size: 12px;
+        color: #7E7E7E;
+    }
+    .cal-submit{
+        background: #FF8100;
+        line-height: 44px;
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        color: #FFFFFF;
+    }
+    .cal-con{
+        position: absolute;
+        top: 136px;
+        width: 100%;
+        font-size: 14px;
+        color: #323232;
+        overflow: hidden;
+    }
+    .cal-con .cal-date h3{
+        text-align: center;
+        line-height: 40px;
+    }
+    .cal-con .cal-date ul{
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        font-size: 14px;
+        color: #323232;
+    }
+    .cal-con .cal-date li{
+        box-sizing: border-box;
+        line-height: 40px;
+        border-top: 1px solid #EEEEEE;
+    }
+    .cal-con .cal-date li.li-nobor{
+        border: none;
+    }
+    .cal-con .cal-date li span.aloneDay{
+        position: absolute;
+        display: inline-block;
+        background: #FF5C00;
+        border-radius: 50%;
+        margin:0 auto;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+    }
+    .cal-con .cal-date li.active{
+        color: #fff;
+        background: #FF5C00;
+    }
+</style>

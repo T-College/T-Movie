@@ -1,0 +1,49 @@
+<template>
+	<div>
+        <ul>
+            <li :class="index == active?'active':''"  v-for="(i,index) in data" @click="selectList(i,index)">
+                {{i}}
+            </li>
+        </ul>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankSpe',
+    	data(){
+    		return {
+                data:['全部','首贷','续贷'],
+                active:0,
+    		}
+    	},
+    	mounted(){
+    	},
+        methods:{
+            selectList(i,index){
+                this.$emit('getSpe',i)
+                this.active = index;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    ul{
+        padding-left: 15px;
+    }
+    li{
+        padding-left: 10px;
+        line-height: 45px;
+        font-size: 13px;
+        color: #323232;
+        border-bottom: 1px solid #D8D8D8;
+    }
+    li:last-child{
+        border-bottom: none;
+    }
+    li.active{
+        color: #FF5C00;
+        border-bottom: 1px solid #FF5C00;
+    }
+</style>

@@ -1,0 +1,7 @@
+/**
+ * Created by william on 16/12/16.
+ */
+
+import Vue from 'vue'
+
+export var bus = new Vue()

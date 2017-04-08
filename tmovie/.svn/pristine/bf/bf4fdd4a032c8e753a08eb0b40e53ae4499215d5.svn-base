@@ -1,0 +1,162 @@
+<template>
+  <div class="index">
+      <div class="index-pep">
+        <img src="../../assets/logo.png" alt="">
+        <div class="index-name">
+          <h2>伊利丹</h2>
+          <p>赢创事业部总经理</p>
+        </div>
+      </div>
+      <div class="index-data">
+        <div class="data-item">
+          <h3>111,000</h3>
+          <p>当日审批总额 (元)</p>
+        </div>
+        <div class="data-item">
+          <h3>80,000</h3>
+          <p>当日放款总额 (元)</p>
+        </div>
+        <div class="data-item">
+          <h3>15</h3>
+          <p>当日放款件数</p>
+        </div>
+        <div class="data-item">
+          <h3>75%</h3>
+          <p>当日总通过率</p>
+        </div>
+      </div>
+      <div class="index-rank">
+          <div class="rank-title">
+            <span>当日全国排名</span>
+            <a href=""></a>
+          </div>
+          <div class="rank-item">
+            <div>
+              <img src="" alt="">
+              <span>19</span>
+              <p>伊利丹</p>
+            </div>
+            <div>
+              <img src="" alt="">
+              <span>1</span>
+              <p>古尔丹</p>
+            </div>
+            <div>
+              <img src="" alt="">
+              <span>2</span>
+              <p>沃金</p>
+            </div>
+            <div>
+              <img src="" alt="">
+              <span>3</span>
+              <p>瓦王</p>
+            </div>
+          </div>
+      </div>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  export default {
+    data() {
+      return {
+      };
+    },
+    methods: {
+    },
+    mounted() {
+    }
+  };
+</script>
+<style scoped>
+  .index{
+    background: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 100px);
+  }
+  .index>div{
+    background: #FFFFFF;
+    box-shadow: 0 1px 2px 0 #E6E6E6;
+  }
+  .index img{
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    padding: 0 18px;
+  }
+  .index-pep{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .index-pep .index-name{
+  }
+  .index-pep .index-name h2{
+    line-height: 21px;
+    font-size: 15px;
+    color: #323232;
+  }
+  .index-pep .index-name p{
+    font-size: 14px;
+    color: #7E7E7E;
+  }
+  .index-data{
+    position: relative;
+    flex: 3;
+    margin:14px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+  }
+  .index-data:after, .index-data:before{
+    content: '';
+    position: absolute;
+  }
+  .index-data:after{
+    height: 100%;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    margin-left:-1px;
+    background: linear-gradient(#FFFFFF 0%,#E0E0E0 25%,#E8E8E8 50%,#E0E0E0 75%,#FFFFFF 100%)
+  }
+  .index-data:before{
+    width: 100%;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    margin-top:-1px;
+    background: linear-gradient(to left,#FFFFFF 0%,#E0E0E0 25%,#E8E8E8 50%,#E0E0E0 75%,#FFFFFF 100%)
+  }
+  .index-data .data-item{
+    width: 50%;
+  }
+  .index-data .data-item h3{
+    font-size: 24px;
+    color: #FF5C00;
+    font-weight: bold;
+  }
+  .index-data .data-item p{
+    line-height: 4;
+    font-size: 13px;
+    color: #7E7E7E;
+  }
+  .index-rank{
+    flex: 1.5;
+    margin-bottom:14px;
+  }
+  .index-rank .rank-title{
+    color: #7E7E7E;
+    border: 1px solid #D8D8D8;
+    line-height: 33px;
+  }
+  .index-rank .rank-item{
+    display: flex;
+  }
+  .index-rank .rank-item>div{
+    flex: 1
+  }
+</style>

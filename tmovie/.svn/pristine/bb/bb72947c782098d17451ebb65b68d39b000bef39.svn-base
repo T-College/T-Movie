@@ -1,0 +1,54 @@
+<!--放款详情-->
+<template>
+  <div id="loanDetail">
+    <mt-cell title="合同编号：">{{business.contract}}</mt-cell>
+    <mt-cell title="类别：">{{business.category}}</mt-cell>
+    <mt-cell title="姓名：" class="reject">{{business.name}}</mt-cell>
+    <mt-cell title="身份证：">{{business.idCard}}</mt-cell>
+    <mt-cell title="所属产品：">{{business.product}}</mt-cell>
+    <mt-cell title="签约金额：">{{business.loanmoney}}</mt-cell>
+    <mt-cell title="放款金额：" class="reject">{{business.loandate}}</mt-cell>
+    <mt-cell title="签约日期：">{{business.everypay}}</mt-cell>
+    <mt-cell title="每期应还款：">{{business.loanmoney}}元</mt-cell>
+    <mt-cell title="近一期账单日：">{{business.lastlist}}</mt-cell>
+    <mt-cell title="状态：">{{business.stutas}}</mt-cell>
+    <mt-cell title="逾期天数：">{{business.overdue}}天</mt-cell>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+
+    export default {
+      data() {
+        return {
+          show:false,
+          business: {
+            contract:'DG20160810339645',
+            category: '首贷',
+            name: 'atom',
+            idCard:'371327198801235131',
+            product:'急借通',
+            loanmoney:'10,000',
+            loandate:'2016-9-9',
+            everypay:'290元',
+            lastlist:'2016-11-11',
+            stutas:'逾期',
+            overdue:'22'
+          },
+        };
+      },
+    }
+</script>
+
+<style>
+  #loanDetail:after{
+    display: block;
+    content: '';
+    height:90px;
+    background: #f2f2f2;
+  }
+  .router-link-active {
+    color: #FF5C00;
+  }
+
+</style>

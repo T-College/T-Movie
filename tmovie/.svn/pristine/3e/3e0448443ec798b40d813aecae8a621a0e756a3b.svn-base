@@ -1,0 +1,477 @@
+<template>
+	<div>
+		<div class="cal-interval">
+            <div>
+                <input type="date" v-model = 'fristDate'>
+                <h3>开始日期</h3>
+                <div class="cal-interval-div">
+                <transition name="pulse">
+                    <h2 v-if='animate.fristDateDay'>{{fristDate|date(2,'day')||'--'}}</h2>
+                </transition>
+                    <p><span>{{fristDate|date(1,'month')||'--'}}月</span><span>{{fristDate|date(0,'year')||'--'}}年</span></p>
+                </div>
+            </div>
+            <div>
+                <input type="date" v-model = 'lastDate'>
+                <h3>结束日期</h3>
+                <div class="cal-interval-div">
+                <transition name="pulse">
+                    <h2 v-if='animate.lastDateDay'>{{lastDate|date(2,'day')||'--'}}</h2>
+                </transition>
+                    <p><span>{{lastDate|date(1,'month')||'--'}}月</span><span>{{lastDate|date(0,'year')||'--'}}年</span></p>
+                </div>
+            </div>
+        </div>
+        <ul class="cal-week">
+            <li  v-for = 'w in d.week' >{{w}}</li>
+        </ul>
+        <div class="cal-con">
+        <transition :name="animate.transitionDateName" mode="out-in">
+            <div class="cal-date" v-if='animate.date'>
+                <h3>{{d.year}}年{{d.month+1}}月</h3>
+                <ul>
+                    <li v-for = 'j in d.frist_day_week' class='li-nobor' :style='{width: width+"px"}'>
+                    </li>
+                    <li
+                    @click='setactive(i)'
+                    v-for='i in d.daylength'
+                    :class="[
+                    i===fristDate.day&&!!lastDate.day&&fristDate.month == d.month&&fristDate.year == d.year?'left':'',
+                    i===lastDate.day&&lastDate.month == d.month&&lastDate.year == d.year?'right':'',
+                    (i==fristDate.day&&i==lastDate.day&&d.month == fristDate.month&&d.month == lastDate.month&&d.year == fristDate.year&&d.year==lastDate.year)||(i==fristDate.day&&d.month == fristDate.month&&d.year==fristDate.year&&!lastDate.year)?'aloneDay':'',
+                    i===d.dayArr[i]?'active':''
+                    ]"
+                    :style = '{
+                    width:width+"px",
+                    }'
+                    >
+                    <span
+                        v-if='(i==fristDate.day&&i==lastDate.day&&d.month == fristDate.month&&d.month == lastDate.month&&d.year == fristDate.year&&d.year==lastDate.year)||(i==fristDate.day&&d.month == fristDate.month&&d.year==fristDate.year&&!lastDate.year)'
+                        :style='{
+                            width:width>40?40+"px":width+"px",
+                            height:width>40?40+"px":width+"px",
+                            "margin-left":width>40?-20+"px":-(width/2)+"px",
+                            "margin-top":width>40?-20+"px":-(width/2)+"px",
+                        }
+                        '>{{i}}
+                        </span>
+                        {{i}}
+                    </li>
+                </ul>
+            </div>
+        </transition>
+        </div>
+        <p class="cal-submit" @click="submit()">选择</p>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankCalendar',
+    	data(){
+    		return {
+                animate:{//动画
+                    date:false,
+                    fristDateDay:false,
+                    lastDateDay:false,
+                    transitionDateName:'fade',
+                },
+    			d:{//当前页面的时间
+                    year:'',
+                    month:'',
+                    day:'',
+                    daylength:'',
+                    dayArr:[],
+                    frist_day_week:'',
+                    dayStart:'',
+                    week:['日','一','二','三','四','五','六'],
+                },
+                fristDate:{//起始日期
+                    day:'',
+                    year:'',
+                    month:'',
+                },
+                lastDate:{//结束日期
+                    day:'',
+                    year:'',
+                    month:'',
+                },
+    		}
+    	},
+        computed: {
+            width(){//自适应宽度
+                return document.querySelector('.cal-week').offsetWidth/7
+            },
+        },
+    	mounted(){
+            const da = new Date();
+            this.init(da);
+            this.touch();
+            this.lastDate = this.fristDate={
+                day:this.d.day,
+                year:this.d.year,
+                month:this.d.month,
+            };
+            this.animate.date = true;
+    	},
+        methods:{
+            init(da){//初始化
+                this.d = {
+                    day:da.getDate(),
+                    month:da.getMonth(),
+                    year:da.getFullYear(),
+                    daylength:this._ndays()[da.getMonth()],
+                }
+                this.d.frist_day_week = this._firstday(),
+                this.d.dayStart = this.fristDate.day||this.d.day;
+                this.d.dayArr = [];
+            },
+            _isleap(){//闰年判断
+                let res;
+                return (this.d.year % 100 == 0 ? res = (this.d.year % 400 == 0 ? 1 : 0) : res = (this.d.year % 4 == 0 ? 1 : 0));
+            },
+            _firstday() {//当前月第一天是星期几
+                return new Date(this.d.year, (this.d.month), 1).getDay();
+            },
+            _ndays () {//当前月天数
+                return [31, 28 + this._isleap(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            },
+            setactive(i){//选择日期
+                if(!!this.fristDate.day&&!!this.lastDate.day){//日期初始化
+                    this.lastDate = this.fristDate={
+                        day:'',
+                        year:'',
+                        month:'',
+                    }
+                    this.d.dayArr = [];
+                    return false
+                }
+                if(!this.fristDate.day){//开始时间
+                    this.fristDate={
+                        day:i,
+                        year:this.d.year,
+                        month:this.d.month,
+                    },
+                    this.d.dayArr.splice(i,1,i);
+                    return false
+                }
+                if(this.fristDate.day==i){//点击时间与开始时间相同时不做操作
+                    return false
+                }
+                this.lastDate={//结束时间
+                    day:i,
+                    year:this.d.year,
+                    month:this.d.month,
+                }
+                this._swap();
+                this._setActive();
+
+            },
+            _swap(){//开始时间与结束时间调换位置
+                if(!this.lastDate.year){
+                    return
+                }
+                let frist = new Date(this.fristDate.year,this.fristDate.month);
+                let last = new Date(this.lastDate.year,this.lastDate.month);
+                if(last<frist||(this.fristDate.year===this.lastDate.year&&this.fristDate.month===this.lastDate.month&&this.fristDate.day>this.lastDate.day)){
+                    let temp = this.fristDate;
+                    this.fristDate = this.lastDate;
+                    this.lastDate = temp;
+                }
+            },
+            _setActive(){//高亮部分
+                this.d.dayArr = [];
+                this.d.dayArr.length = this.d.daylength+1;
+                let frist = new Date(this.fristDate.year,this.fristDate.month);
+                let last = new Date(this.lastDate.year,this.lastDate.month);
+                let dDate = new Date(this.d.year,this.d.month);
+                //相同的月份时间高亮
+                if(this.fristDate.month === this.lastDate.month
+                    &&this.fristDate.year === this.lastDate.year
+                    &&this.lastDate.month === this.d.month
+                    &&this.lastDate.year === this.d.year){
+                    let len = this.lastDate.day - this.fristDate.day;
+                    for(let l = 1;l<len;l++){
+                        this.d.dayArr.splice(this.fristDate.day+l,1,this.fristDate.day+l);
+                    }
+                    return false
+                }
+                //结束月份时间高亮
+                if(this.fristDate.month==this.d.month&&this.fristDate.year == this.d.year&&!!this.lastDate.day){
+                    for(let k = this.fristDate.day;k<this.d.dayArr.length;k++){
+                        this.d.dayArr.splice(k,1,k);
+                    }
+                    return false
+                }
+                //开始月份时间高亮
+                if(this.lastDate.month==this.d.month&&this.lastDate.year == this.d.year&&!!this.lastDate.day){
+                    for(let n = 1;n<this.lastDate.day;n++){
+                        this.d.dayArr.splice(this.lastDate.day-n,1,this.lastDate.day-n);
+                    }
+                    return false
+                }
+                //开始和结束之间月份时间高亮
+                if(dDate>frist&&dDate<last&&!!this.lastDate.day){
+                    for(let m = 1;m<this.d.daylength+1;m++){
+                        this.d.dayArr.splice(m,1,m);
+                    }
+                    return false
+                }
+            },
+            _setDate(data,type){//原生弹出框显示时间
+                if(typeof data === 'string'){
+                    this[type]={
+                        day:parseInt(data.split(/[-,/\s]/)[2]),
+                        year:parseInt(data.split(/[-,/\s]/)[0]),
+                        month:parseInt(data.split(/[-,/\s]/)[1]-1),
+                    }
+                    this._swap();
+                    if((this.d.month !== this.fristDate.month||this.d.month !==this.lastDate.month)&&!!this.fristDate.month){
+                        this.init(new Date(data))
+                    }
+                }
+            },
+            touch(){//移动手势
+                let _this = this;
+                let arrY = [];
+                let arrTimeStamp = [];
+                let settime = 0;
+                document.addEventListener('touchend',function(e){
+                    _this.animate.date = true;
+                    arrY = [];
+                    arrTimeStamp = [];
+                    // _this.d.dayArr = [];
+                    settime = 0;
+                })
+                document.addEventListener('touchmove',function(e){
+                    _this.animate.date = false;
+                    let y = Math.floor(e.touches[0].pageY);
+                    let timeStamp = e.timeStamp;
+                    arrY.push(y);
+                    arrTimeStamp.push(timeStamp)
+                    let starT = arrTimeStamp[0];
+                    let endT = arrTimeStamp[arrTimeStamp.length-1];
+                    let star = arrY[0];
+                    let end = arrY[arrY.length-1];
+                    let num = star-end;
+                    let time = endT - starT;
+                    let touch = {
+                        year:_this.d.year,
+                        month:_this.d.month,
+                        day:_this.d.day,
+                    }
+
+                    if(num== 0||time == 0){
+                        return
+                    }
+                    else if(num>10&&time>10){//向上滑动
+                        if(!settime){
+                            touch.month ++;
+                        _this.animate.transitionDateName = 'bouncelnDown';
+                        _this.init(new Date(touch.year,touch.month,touch.day));
+                        _this._setActive();
+                        };
+                        settime++;
+                    }else if(num<-10&&time>10){//向下滑动
+                        if(!settime){
+                            touch.month --;
+                        _this.animate.transitionDateName = 'bouncelnUp';
+                        _this.init(new Date(touch.year,touch.month,touch.day));
+                        _this._setActive();
+                        };
+                        settime++;
+                    }
+                })
+            },
+            dateChang(data,type){//监听日期
+                if(!data.day&&typeof data !=='string'){
+                    return false
+                }
+                let _this = this;
+                this.animate[type+'Day'] = false;
+                this._setDate(data,type);
+                this._setActive();
+                setTimeout(()=>{
+                    _this.animate[type+'Day'] = true;
+                },0)
+            },
+            submit(){//提交日趋
+                if(!this.fristDate.year){
+                    alert('请选择开始日期')
+                    return
+                }
+                if(!this.lastDate.year){
+                    alert('请选择结束日期')
+                    return
+                }
+                let date = {
+                    start:this.fristDate.year+'/'+(this.fristDate.month+1<10?'0'+(this.fristDate.month+1):this.fristDate.month+1)+'/'+(this.fristDate.day<10?'0'+this.fristDate.day:this.fristDate.day),
+                    end:this.lastDate.year+'/'+(this.lastDate.month+1<10?'0'+(this.lastDate.month+1):this.lastDate.month+1)+'/'+(this.lastDate.day<10?'0'+this.lastDate.day:this.lastDate.day)
+                }
+                this.$emit('getDateSup',date)
+            },
+        },
+        watch:{
+            'fristDate'(data){
+                this.dateChang(data,'fristDate');
+            },
+            'lastDate'(data){
+                this.dateChang(data,'lastDate');
+            },
+        }
+    }
+</script>
+
+<style scoped>
+    .cal-interval{
+        height: 106px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: absolute;
+        width: 100%;
+    }
+    .cal-interval:after{
+        content: "";
+        height: 80px;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 1px;
+        background: #E0E0E0;
+    }
+    .cal-interval>div{
+        position: relative;
+        flex:1;
+        box-sizing: border-box;
+    }
+    .cal-interval h3{
+        padding: 13px 0;
+        padding-left: 30px;
+        font-size: 15px;
+        color: #7E7E7E;
+    }
+    .cal-interval .cal-interval-div{
+        box-sizing: border-box;
+        overflow: hidden;
+        clear: both;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cal-interval .cal-interval-div h2{
+        padding-left: 30px;
+        width: 50%;
+        float: left;
+        font-size: 38px;
+        color: #FF5C00;
+        padding-right: 5px;
+        box-sizing: border-box;
+    }
+    .cal-interval .cal-interval-div p {
+        box-sizing: border-box;
+        width: 50%;
+        float: left;
+    }
+    .cal-interval .cal-interval-div p span{
+        line-height: 25px;
+        display: block;
+        font-size: 13px;
+        color: #323232;
+    }
+    .cal-interval input[type='date']{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .cal-week{
+        display: flex;
+        position: absolute;
+        margin-top: 106px;
+        width: 100%;
+        background: #EEEEEE;
+        height: 30px;
+        align-items: center;
+    }
+    .cal-week li{
+        text-align: center;
+        flex:1;
+        font-size: 12px;
+        color: #7E7E7E;
+    }
+    .cal-submit{
+        background: #FF8100;
+        line-height: 44px;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        z-index:99;
+        color: #FFFFFF;
+    }
+    .cal-con{
+        position: absolute;
+        top: 136px;
+        width: 100%;
+        font-size: 14px;
+        color: #323232;
+        overflow: hidden;
+    }
+    .cal-con .cal-date h3{
+        text-align: center;
+        line-height: 40px;
+    }
+    .cal-con .cal-date ul{
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        font-size: 14px;
+        color: #323232;
+    }
+    .cal-con .cal-date li{
+        transition: all .5s;
+        box-sizing: border-box;
+        line-height: 40px;
+        border-top: 1px solid #EEEEEE;
+    }
+    .cal-con .cal-date li.li-nobor{
+        border: none;
+    }
+    .cal-con .cal-date li.active{
+        color: #fff;
+        background: #FF5C00;
+    }
+    .cal-con .cal-date li.left{
+        color: #fff;
+        background: #FF5C00;
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+    .cal-con .cal-date li.right{
+        background: #FF5C00;
+        color: #fff;
+        border-top-right-radius: 50%;
+        border-bottom-right-radius: 50%;
+    }
+    .cal-con .cal-date li.aloneDay{
+        background: #fff;
+        position: relative;
+        color: #fff;
+        z-index: 3;
+    }
+    .cal-con .cal-date li.aloneDay span{
+        position: absolute;
+        display: inline-block;
+        background: #FF5C00;
+        border-radius: 50%;
+        margin:0 auto;
+        z-index: 2;
+        left: 50%;
+        top: 50%;
+    }
+
+</style>

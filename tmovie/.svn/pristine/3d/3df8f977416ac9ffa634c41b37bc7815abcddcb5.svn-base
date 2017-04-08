@@ -1,0 +1,109 @@
+<template>
+	<div>
+        <ul class="spe-l">
+            <li >请选择事业部</li>
+            <li :class="!index?'active':''" v-for="(i,index) in data">
+                {{i.name}}
+            </li>
+        </ul>
+        <ul class="spe-r">
+            <li class="active">全部区域</li>
+            <li v-for="i in data[0].list">
+                {{i}}
+            </li>
+        </ul>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankType',
+        data(){
+            return {
+                data:[{
+                    name:'新校',
+                    list:[
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                },
+                {
+                    name:'新校',
+                    list:[
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                },
+                {
+                    name:'新校',
+                    list:[
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                }]
+            }
+        },
+    	mounted(){
+    	}
+    }
+</script>
+
+<style scoped>
+.rank-type{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    ul{
+        display: inline-block;
+        flex: 1;
+        box-sizing: border-box;
+        font-size: 13px;
+        color: #323232;
+    }
+    .spe-l{
+        background: #F4F4F4;
+        overflow: auto;
+    }
+    .spe-l li{
+        padding-left: 20px;
+        line-height: 44px;
+    }
+    .spe-r{
+        overflow: auto;
+        background: #fff
+    }
+    .spe-r li{
+        padding-left: 12px;
+        line-height: 44px;
+        border-bottom: 1px solid #D8D8D8;
+    }
+    li:last-child{
+        border-bottom: none;
+    }
+    .spe-l li.active{
+        background: #fff;
+    }
+    .spe-r li.active{
+        color: #FF5C00;
+        border-bottom: 1px solid #FF5C00;
+    }
+</style>

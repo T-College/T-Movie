@@ -1,0 +1,44 @@
+<template>
+  <div id="loanDetail">
+    <mt-cell title="合同编号：">{{business.theday}}</mt-cell>
+    <mt-cell title="类别：">{{business.theday}}</mt-cell>
+    <mt-cell title="姓名：" class="reject">{{business.theday}}</mt-cell>
+    <mt-cell title="身份证：">{{business.theday}}</mt-cell>
+    <mt-cell title="所属产品：">{{business.theday}}</mt-cell>
+    <mt-cell title="签约金额：">{{business.theday}}</mt-cell>
+    <mt-cell title="放款金额：" class="reject">{{business.theday}}</mt-cell>
+    <mt-cell title="签约日期：">{{business.theday}}</mt-cell>
+    <mt-cell title="每期应还款：">{{business.theday}}</mt-cell>
+    <mt-cell title="近一期账单日：">{{business.theday}}</mt-cell>
+    <mt-cell title="状态：">{{business.theday}}</mt-cell>
+    <mt-cell title="逾期天数：">{{business.theday}}</mt-cell>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+
+    export default {
+      data() {
+        return {
+          show:false,
+          business: {
+            theday: '460',
+            themonth: '461'
+          },
+        };
+      },
+    }
+</script>
+
+<style>
+  #loanDetail{
+    position: fixed;
+    top:0;
+    left:0;
+    bottom:50px;
+    z-index:30;
+    width:100%;
+    background:#fff;
+  }
+
+</style>

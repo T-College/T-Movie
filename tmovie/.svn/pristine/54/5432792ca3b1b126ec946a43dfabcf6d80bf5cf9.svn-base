@@ -1,0 +1,40 @@
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import VueResource from 'vue-resource';
+import App from './App';
+
+// 引入全部组件mint插件
+import Mint from 'mint-ui';
+import 'mint-ui/lib/style.css';
+
+// 引入路由组件
+import home from 'components/home/home';
+import business from 'components/business/business';
+import custom from 'components/custom/custom';
+import rank from 'components/rank/rank';
+
+Vue.use(VueRouter);
+Vue.use(VueResource);
+Vue.use(Mint);
+
+// 定义路由
+const routes = [
+  { path: '/', redirect: '/home' },//默认路径
+  { path: '/home', component: home },//首页
+  { path: '/business', component: business },//业务
+  { path: '/custom', component: custom },//客户
+  { path: '/rank', component: rank }//排名
+];
+
+// 创建路由实例
+const router = new VueRouter({
+  routes
+});
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  template: '<App/>',
+  components: { App },
+  router
+});

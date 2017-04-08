@@ -1,0 +1,76 @@
+  <template>
+    <div class="page-navbar">
+      <mt-navbar class="page-part" v-model="selected">
+        <mt-tab-item id="1">当天</mt-tab-item>
+        <mt-tab-item id="2">当月</mt-tab-item>
+      </mt-navbar>
+
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+          <mt-cell title="进件量：">{{business.theday}}</mt-cell>
+          <mt-cell title="暂存量：">{{business.theday}}</mt-cell>
+          <mt-cell title="拒件量：" class="reject">{{business.theday}}</mt-cell>
+          <mt-cell title="通过量：">{{business.theday}}</mt-cell>
+          <mt-cell title="无效进件：">{{business.theday}}</mt-cell>
+          <mt-cell title="待审量：">{{business.theday}}</mt-cell>
+          <mt-cell title="审批总金额："class="reject">{{business.theday}}</mt-cell>
+          <mt-cell title="放款总额：">{{business.theday}}</mt-cell>
+          <mt-cell title="放款件：">{{business.theday}}</mt-cell>
+          <mt-cell title="总通过率：">{{business.theday}}</mt-cell>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+          <mt-cell title="进件量：">{{business.themonth}}</mt-cell>
+          <mt-cell title="拒件量：" class="reject">{{business.themonth}}</mt-cell>
+          <mt-cell title="总部通过量：">{{business.themonth}}</mt-cell>
+          <mt-cell title="无效进件：">{{business.themonth}}</mt-cell>
+          <mt-cell title="审批总金额："class="reject">{{business.themonth}}</mt-cell>
+          <mt-cell title="放款总额：">{{business.themonth}}</mt-cell>
+          <mt-cell title="放款件：">{{business.themonth}}</mt-cell>
+          <mt-cell title="通过率：">{{business.themonth}}</mt-cell>
+        </mt-tab-container-item>
+      </mt-tab-container>
+    </div>
+  </template>
+
+<script type="text/ecmascript-6">
+    export default {
+      name: 'page-navbar',
+      data() {
+        return {
+          business:{
+              theday:'460',
+              themonth:'461'
+          },
+          selected: '1',
+        };
+      }
+    }
+</script>
+
+<style>
+  .page-part{
+    margin-top:40px;
+  }
+  .mint-navbar .mint-tab-item.is-selected.is-selected{
+    border-bottom: 4px solid #FF8100;
+    color: #FF8100;
+    margin-bottom:0px;
+  }
+  .mint-tab-item-label{
+    font-size: 15px!important;
+  }
+  .mint-cell-wrapper{
+    padding:0 20px!important;
+  }
+  .reject{
+    margin-top:14px;
+  }
+  .mint-tab-container:after{
+    display: block;
+    content: '';
+    height: 70px;
+    background:#F2F2F2;
+  }
+
+
+</style>

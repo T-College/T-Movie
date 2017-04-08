@@ -1,0 +1,141 @@
+<!--放款客户-->
+<template>
+  <div class="page-infinite">
+    <div class="cell-list">
+     <div class="cell-list-item">签约日期</div>
+     <div class="cell-list-item">编号</div>
+     <div class="cell-list-item">姓名</div>
+     <div class="cell-list-item">还款状态</div>
+    </div>
+    <div class="page-infinite-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <ul class="page-infinite-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"
+          infinite-scroll-distance="50">
+        <router-link :to="{path:'/loandetail'}">
+
+        <li v-for="item in list" class="page-infinite-listitem">
+          <div class="cell-list-item">{{item}}</div>
+          <div class="cell-list-item">编号</div>
+          <div class="cell-list-item">姓名</div>
+          <div class="cell-list-item">还款状态
+            <div class="list-icon">
+              <i class="icon iconfont icon-arrow"></i>
+            </div>
+          </div>
+        </li>
+        </router-link>
+
+      </ul>
+      <p v-show="loading" class="page-infinite-loading">
+        <mt-spinner type="fading-circle"></mt-spinner>
+        加载中...
+      </p>
+    </div>
+    <!--<loanDetail></loanDetail>-->
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+  import loanDetail from '../loanDetail';
+  export default {
+    data() {
+      return {
+        list: [],
+        loading: false,
+        allLoaded: false,
+        wrapperHeight: 0,
+      };
+    },
+
+    methods: {
+      loadMore() {
+        this.loading = true;
+        setTimeout(() => {
+          let last = this.list[this.list.length - 1];
+          for (let i = 1; i <= 10; i++) {
+            this.list.push(last + i);
+          }
+          this.loading = false;
+        }, 2500);
+      },
+//      selectedDetail(loanDetail){
+//        this.$refs.loanDetail.show();
+//      }
+    },
+    components:{
+      loanDetail
+    },
+    mounted() {
+      this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+      for (let i = 1; i <= 20; i++) {
+        this.list.push(i);
+      }
+    }
+  };
+</script>
+
+<style>
+  .page-infinite-desc {
+    text-align: center;
+    color: #666;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #eee;
+  }
+
+  .page-infinite-listitem {
+    display:flex;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: solid 1px #eee;
+    background:#fff;
+  }
+
+  .page-infinite-wrapper {
+    overflow-y: scroll;
+  }
+
+  .page-infinite-loading {
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .page-infinite-loading div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+  .mint-cell-mask::after {
+    background-color: #000;
+    content: " ";
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height:1px!important;
+    position: absolute;
+  }
+  .cell-list{
+    border-top: 1px solid #E7E7E7;
+    display: flex;
+    width: 100%;
+    height:35px;
+    line-height:20px;
+    background: #fff;
+    padding-top:15px;
+    border-bottom: solid 1px #eee;
+  }
+  .cell-list-item{
+    flex: 1;
+    text-align: center;
+    color:#7e7e7e;
+  }
+  .icon-arrow{
+    font-size:25px;
+  }
+  .list-icon{
+    float: right;
+    margin-top:1px
+  }
+
+</style>

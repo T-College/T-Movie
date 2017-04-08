@@ -1,0 +1,34 @@
+/**浅入浅出**/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0;
+}
+
+/**从上往下**/
+.bouncelnDown-enter-active, .bouncelnDown-leave-active {
+  transition: all .5s;
+}
+.bouncelnDown-enter, .bouncelnDown-leave-active {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+/**从下往上**/
+.bouncelnUp-enter-active, .bouncelnUp-leave-active {
+  transition: all .5s;
+}
+.bouncelnUp-enter, .bouncelnUp-leave-active {
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+/**放大1.5倍**/
+.pulse-enter-active, .pulse-leave-active {
+  transition: all .5s;
+}
+.pulse-enter, .pulse-leave-active {
+  opacity: 0;
+  transform: scale(1.5);
+}

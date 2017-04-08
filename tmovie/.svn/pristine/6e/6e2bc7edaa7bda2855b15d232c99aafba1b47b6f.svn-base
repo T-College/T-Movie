@@ -1,0 +1,129 @@
+{
+  "_args": [
+    [
+      "mint-ui",
+      "/Users/william/WebstormProject/dingding/dingding"
+    ]
+  ],
+  "_from": "mint-ui@*",
+  "_id": "mint-ui@2.0.5",
+  "_inCache": true,
+  "_location": "/mint-ui",
+  "_nodeVersion": "5.8.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/mint-ui-2.0.5.tgz_1479096817981_0.2771527422592044"
+  },
+  "_npmUser": {
+    "email": "cinwell.li@gmail.com",
+    "name": "qingwei.li"
+  },
+  "_npmVersion": "3.7.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "mint-ui",
+    "raw": "mint-ui",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "*",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/mint-ui/-/mint-ui-2.0.5.tgz",
+  "_shasum": "6b3f48eecdd96aabafcedf8d00a555c3c102ca8f",
+  "_shrinkwrap": null,
+  "_spec": "mint-ui",
+  "_where": "/Users/william/WebstormProject/dingding/dingding",
+  "author": {
+    "name": "elemefe"
+  },
+  "bugs": {
+    "url": "https://github.com/ElemeFE/mint-ui/issues"
+  },
+  "dependencies": {
+    "array-find-index": "^1.0.2",
+    "raf.js": "0.0.4",
+    "vue-lazyload": "^0.8.0",
+    "vue-popup": "^0.2.9",
+    "wind-dom": "0.0.3"
+  },
+  "description": "Mobile UI elements for vue.js",
+  "devDependencies": {
+    "cooking": "^1.1.0",
+    "cooking-buble": "^0.1.2",
+    "cooking-lint": "^0.1.2",
+    "cooking-saladcss": "^0.4.0",
+    "cooking-vue2": "^0.2.2",
+    "css-loader": "^0.25.0",
+    "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "fastclick": "^1.0.6",
+    "file-loader": "^0.9.0",
+    "gh-pages": "^0.11.0",
+    "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.22.0",
+    "json-loader": "^0.5.4",
+    "json-templater": "^1.0.4",
+    "lerna": "2.0.0-beta.18",
+    "my-local-ip": "^1.0.0",
+    "postcss": "^5.2.0",
+    "postcss-loader": "^0.13.0",
+    "rimraf": "^2.5.4",
+    "style-loader": "^0.13.1",
+    "uppercamelcase": "^1.1.0",
+    "url-loader": "^0.5.7",
+    "vue": "^2.0.2",
+    "vue-loader": "^9.5.3",
+    "vue-router": "^2.0.0",
+    "webpack": "2.1.0-beta.22",
+    "webpack-dev-server": "2.1.0-beta.6",
+    "webpack-shell-plugin": "^0.4.3"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "6b3f48eecdd96aabafcedf8d00a555c3c102ca8f",
+    "tarball": "https://registry.npmjs.org/mint-ui/-/mint-ui-2.0.5.tgz"
+  },
+  "files": [
+    "lib",
+    "packages",
+    "src"
+  ],
+  "gitHead": "b245dfe77ef5bda442789a70b32fb0ba1c9fa878",
+  "homepage": "https://github.com/ElemeFE/mint-ui#readme",
+  "installable": true,
+  "keywords": [
+    "component",
+    "eleme",
+    "mobile",
+    "vue"
+  ],
+  "license": "MIT",
+  "main": "lib/mint-ui.common.js",
+  "maintainers": [
+    {
+      "name": "yi.yang",
+      "email": "leopoldthecuber@gmail.com"
+    }
+  ],
+  "name": "mint-ui",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElemeFE/mint-ui.git"
+  },
+  "scripts": {
+    "bootstrap": "npm i",
+    "build:entry": "node build/bin/build-entry",
+    "clean": "rimraf lib && rimraf packages/*/lib",
+    "deploy": "npm run build:entry && cooking build -c build/cooking.demo.js -p && gh-pages -d example/dist --remote eleme",
+    "dev": "npm run bootstrap && npm run build:entry && cooking watch -c build/cooking.demo.js -p",
+    "dist": "npm run bootstrap && npm run clean && npm run build:entry && npm run lint && cooking build -c build/cooking.conf.js,build/cooking.common.js,build/cooking.component.js -p",
+    "lint": "eslint src/**/*.js packages/**/*.{js,vue} build/**/*.js --quiet",
+    "pub": "sh build/release.sh",
+    "pub:all": "node build/bin/build-all.js && lerna publish"
+  },
+  "style": "lib/style.css",
+  "version": "2.0.5"
+}

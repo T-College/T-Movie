@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      "raf.js@0.0.4",
+      "/Users/william/WebstormProject/dingding/dingding/node_modules/mint-ui"
+    ]
+  ],
+  "_from": "raf.js@0.0.4",
+  "_id": "raf.js@0.0.4",
+  "_inCache": true,
+  "_location": "/raf.js",
+  "_npmUser": {
+    "email": "ngryman@gmail.com",
+    "name": "ngryman"
+  },
+  "_npmVersion": "1.3.17",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "raf.js",
+    "raw": "raf.js@0.0.4",
+    "rawSpec": "0.0.4",
+    "scope": null,
+    "spec": "0.0.4",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/mint-ui"
+  ],
+  "_resolved": "https://registry.npmjs.org/raf.js/-/raf.js-0.0.4.tgz",
+  "_shasum": "f15af445d241b27fa7131a57450b67ef9c402fec",
+  "_shrinkwrap": null,
+  "_spec": "raf.js@0.0.4",
+  "_where": "/Users/william/WebstormProject/dingding/dingding/node_modules/mint-ui",
+  "author": {
+    "name": "Nicolas Gryman"
+  },
+  "bugs": {
+    "url": "https://github.com/ngryman/raf.js/issues"
+  },
+  "categories": [
+    "Shims",
+    "UI",
+    "Utilities"
+  ],
+  "dependencies": {},
+  "description": "Yet another requestAnimationFrame polyfill.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "f15af445d241b27fa7131a57450b67ef9c402fec",
+    "tarball": "https://registry.npmjs.org/raf.js/-/raf.js-0.0.4.tgz"
+  },
+  "files": [
+    "README.md",
+    "raf.js",
+    "raf.min.js"
+  ],
+  "homepage": "https://github.com/ngryman/raf.js",
+  "installable": true,
+  "jam": {
+    "include": [
+      "raf.js",
+      "raf.min.js"
+    ],
+    "main": "raf.js"
+  },
+  "keywords": [
+    "animation",
+    "polyfill",
+    "raf",
+    "requestanimationframe"
+  ],
+  "license": "MIT",
+  "main": "raf.js",
+  "maintainers": [
+    {
+      "name": "ngryman",
+      "email": "ngryman@gmail.com"
+    }
+  ],
+  "name": "raf.js",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ngryman/raf.js.git"
+  },
+  "version": "0.0.4"
+}

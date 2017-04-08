@@ -1,0 +1,66 @@
+export default [
+  {
+    path: '/', //默认路径
+    redirect: '/home' ,
+    meta:{
+        name:'首页',
+        isshowBackbtn:true,
+    }
+  },
+  {
+    path: '/home',//首页
+    component: require('components/home/home'),
+    meta:{
+        name:'首页',
+        isshowBackbtn:true,
+    }
+  },
+  {
+    path: '/business',//业务
+    component: require('components/business/business'),
+    meta:{
+        name:'业务',
+        isshowBackbtn:true,
+    }
+  },
+  {
+    path: '/custom',//客户
+    component: require('components/custom/custom'),
+    meta:{
+        name:'客户',
+        isshowBackbtn:true,
+    },
+
+  },
+  {
+    path: '/rank',//排行
+    component: require('components/rank/rank'),
+    meta:{
+        name:'排行',
+        isshowBackbtn:true,
+    }
+  },
+  { 
+    path: '/rankDetail',//排行详情页
+    component: require('components/rank/rankDetail'), 
+    meta:{
+        name:'排行详情页',
+    }
+  },
+  {
+    path: '/loandetail',//排名
+    component: require('components/loanDetail/loanDetail'),
+    meta:{
+      name:'放款客户端详情',
+    }
+  },
+  {
+    path: '*',
+    component: require('./404.vue'),
+    meta:{
+      name:'404 not found'
+    }
+  },
+];
+
+

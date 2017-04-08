@@ -1,0 +1,124 @@
+<template>
+	<div>
+        <ul class="spe-l">
+            <li class="active">请选择事业部</li>
+            <li :class="index == active1?'active':''" v-for="(i,index) in data" @click="selectName(index)">
+                {{i.name}}
+            </li>
+        </ul>
+        <ul class="spe-r">
+            <li class="active">全部区域</li>
+            <li v-for="(i,index) in dataList" @click="selectList(i,index)" :class="index===active2?'active':''">
+                {{i}}
+            </li>
+        </ul>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankType',
+        data(){
+            return {
+                active1:false,
+                active2:false,
+                data:[{
+                    name:'新校1',
+                    list:[
+                    '信销一区1',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    '信销一区',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                },
+                {
+                    name:'新校2',
+                    list:[
+                    '信销一区2',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                },
+                {
+                    name:'新校3',
+                    list:[
+                    '信销一区3',
+                    '信销二区',
+                    '信销三区',
+                    '信销④区',
+                    ]
+                }],
+                dataList:[],
+            }
+        },
+        mounted(){
+            this.dataList = this.data[0].list
+        },
+        methods:{
+            selectName(index){
+                this.dataList = this.data[index].list;
+                this.active1 = index;
+                this.active2 = null;
+            },
+            selectList(i,index){
+                this.$emit('getType',i)
+                this.active2 = index;
+            }
+        }
+    }
+</script>
+
+<style scoped>
+.rank-type{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    ul{
+        display: inline-block;
+        flex: 1;
+        box-sizing: border-box;
+        font-size: 13px;
+        color: #323232;
+    }
+    .spe-l{
+        background: #F4F4F4;
+        overflow: auto;
+    }
+    .spe-l li{
+        padding-left: 20px;
+        line-height: 44px;
+    }
+    .spe-r{
+        overflow: auto;
+        background: #fff
+    }
+    .spe-r li{
+        padding-left: 12px;
+        line-height: 44px;
+        border-bottom: 1px solid #D8D8D8;
+    }
+    li:last-child{
+        border-bottom: none;
+    }
+    .spe-l li.active{
+        background: #fff;
+    }
+    .spe-r li.active{
+        color: #FF5C00;
+        border-bottom: 1px solid #FF5C00;
+    }
+</style>

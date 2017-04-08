@@ -1,0 +1,99 @@
+<!--客户－客户经理-->
+<template>
+  <div class="page-navbar">
+    <mt-navbar class="page-part" v-model="selected">
+      <mt-tab-item id="1">{{listTitle}}</mt-tab-item>
+      <mt-tab-item id="2" v-show="show">放款客户</mt-tab-item>
+      <mt-tab-item id="3">{{searchTitle}}</mt-tab-item>
+    </mt-navbar>
+
+    <mt-tab-container v-model="selected">
+      <mt-tab-container-item id="1">
+      <applicationClient v-show="show"></applicationClient>
+      <teamSearch v-show="!show"></teamSearch>
+      </mt-tab-container-item>
+      <!--放款客户-->
+      <mt-tab-container-item id="2">
+         <loanClient></loanClient>
+      </mt-tab-container-item>
+
+      <mt-tab-container-item id="3">
+        <searchCustom></searchCustom>
+      </mt-tab-container-item>
+    </mt-tab-container>
+  </div>
+</template>
+
+<script type="text/ecmascript-6">
+//  <!--放款客户-->
+import loanClient from './customManage/loanClient';
+import searchCustom from './customManage/searchCustom';
+import teamSearch from './teamManage/teamSearch';
+import applicationClient from './customManage/applicationClient';//客户经理
+
+  export default {
+    name: 'page-navbar',
+    data() {
+      return {
+        business: {
+          theday: '460',
+          themonth: '461'
+        },
+        selected: '1',
+        listTitle:'',
+        searchTitle:'',
+        show:true
+      };
+    },
+    created(){
+      this.$nextTick(() => {
+         let type='1';
+         if(type ==='1'){
+             this.listTitle='申请客户';
+           this.searchTitle='搜索客户';
+         }else{
+             this.listTitle='申请件';
+             this.searchTitle='放款客户';
+             this.show=false;
+         }
+      })
+    },
+    components:{
+      applicationClient,
+      loanClient,
+      searchCustom,
+      teamSearch
+    }
+  }
+</script>
+
+<style>
+  .page-part {
+    margin-top: 40px;
+  }
+
+  .mint-navbar .mint-tab-item.is-selected.is-selected {
+    border-bottom: 4px solid #FF8100;
+    color: #FF8100;
+    margin-bottom: 0px;
+  }
+
+  .mint-tab-item-label {
+    font-size: 15px !important;
+  }
+
+  .mint-cell-wrapper {
+    padding: 0 20px !important;
+  }
+
+  .reject {
+    margin-top: 14px;
+  }
+  .mint-tab-container:after {
+    display: block;
+    content: '';
+    height: 50px;
+    background: #F2F2F2;
+  }
+
+</style>

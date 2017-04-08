@@ -1,0 +1,277 @@
+<template>
+	<div class="rank">
+		<div class="maskLayer" v-if='maskLayer' @click='maskEven()'></div>
+    	<div class="rank-nav rank-li">
+			<span class="clb" :class="clt.type"  @click='maskEven("type")'>{{data.type}}</span>
+			<span class="clb" :class="clt.sort"   @click='maskEven("sort")'>{{data.sort}}</span>
+			<span class="clb" :class="clt.spe"   @click='maskEven("spe")'>{{data.spe}}</span>
+			<p v-if='!!data.date.start&&!!data.date.end&&!maskLayer'   @click='maskEven("calendar")'>{{data.date.start}}<span></span>{{data.date.end}}</p>
+			<span v-if='!data.date.start&&!data.date.end||maskLayer' class="clb" :class="clt.calendar"  @click='maskEven("calendar")'>时间</span>
+		</div>
+        <div class="rank-tab rank-li">
+			<span class="ranking">名次</span>
+			<span class="lv">级别</span>
+			<span class="name">负责人</span>
+			<span class="res">放款业绩(元)</span>
+			<span class="rank-icon"></span>
+		</div>
+		<transition name="bouncelnDown" mode="out-in">
+        	<Rank-type class='rank-type' v-if='maskLayer&&rank.type' v-on:getType="getType"></Rank-type>
+    	</transition>
+        <transition name="bouncelnDown" mode="out-in">
+        	<Rank-sort class='rank-sort' v-if='maskLayer&&rank.sort' v-on:getSort="getSort"></Rank-sort>
+    	</transition>
+    	<transition name="bouncelnDown" mode="out-in">
+        	<Rank-spe class ='rank-spe' v-if='maskLayer&&rank.spe' v-on:getSpe="getSpe"></Rank-spe>
+    	</transition>
+        <transition name="bouncelnDown" mode="out-in">
+        	<Rank-calendar  class ='rank-calendar' v-if='maskLayer&&rank.calendar' v-on:getDateSup="getDate"></Rank-calendar>
+    	</transition>
+    	<transition name="fade">
+        	<Rank-res class="rank-res" :style='hidePosition' v-if='rank.res'></Rank-res>
+    	</transition>
+	</div>
+</template>
+
+<script>
+import rankResult from './rankResult';       	//结果
+import rankCalendar from './rankCalendar';		//日历
+import rankSort from './rankSort';				//排序
+import rankSpecies from './rankSpecies';		//种类
+import rankType from './rankType';				//类型
+
+    export default {
+        name:'rank',
+    	data(){
+    		return {
+    			hidePosition:{
+    				position:'relative',
+    			},
+    			rankInitHeight:'',
+    			maskLayer:false,
+    			data:{
+    				date:{
+    				start:'',
+    				end:'',
+	    			},
+	    			type:'全部区域',
+	    			sort:'全国排行',
+	    			spe:'种类',
+	    		},
+    			clt:{
+    				type:'',
+    				sort:'',
+    				spe:'',
+    				calendar:'',
+    				constclt:'',
+    			},
+    			rank:{
+    				type:false,
+    				sort:false,
+    				spe:false,
+    				calendar:false,
+    				res:true,
+    			}
+    		}
+    	},
+    	computed: {
+        },
+        components:{
+            'Rank-type':rankType,
+        	'Rank-sort':rankSort,
+            'Rank-spe':rankSpecies,
+            'Rank-calendar':rankCalendar,
+            'Rank-res':rankResult,
+        },
+    	mounted(){
+    		this.rankInitHeight = document.querySelector('.rank-res').clientHeight;
+    	},
+	    methods: {
+	    	init(){
+	    		this.clt = {
+    				type:'',
+    				sort:'',
+    				spe:'',
+    				calendar:'',
+    				constclt:'',
+    			},
+    			this.rank = {
+    				type:false,
+    				sort:false,
+    				spe:false,
+    				calendar:false,
+    				res:true,
+    			}
+	    	},
+	      	maskEven(cls) {
+	      		if(!!cls){
+	      			if(!this.maskLayer){
+	      				this.maskLayer = !this.maskLayer;
+	      				this.clt[cls] = 'clt';
+	      			}else{
+	      				if(this.clt.constclt === cls){
+	      					this.clt[cls] = '';
+	      					this.maskLayer = !this.maskLayer;
+	      					this.clt.constclt = '';
+	      					this.hidePosition.position = 'relative';
+	      					return
+	      				}
+      					this.clt[this.clt.constclt] = '';
+      					this.clt[cls] = 'clt';
+	      			}
+	      			this.clt.constclt = cls;
+	      		}else{
+	      			if(this.clt.constclt){
+	      				this.clt[this.clt.constclt] = '';
+	      			}
+	        		this.maskLayer = !this.maskLayer;
+	        		this.clt.constclt = '';
+	        		this.hidePosition.position = 'relative';
+	      		}
+	      		this.rankNav();
+	        },
+	        rankNav(){
+	        	Object.keys(this.rank).forEach(k=>{
+	        		this.rank[k] = !1;
+	        		this.rank.res = !0;
+	        	})
+	        	this.rank[this.clt.constclt] = !this.rank[this.clt.constclt];
+	        },
+	        _replace(){
+				this.rank.calendar = !this.rank.calendar;
+	        	this.maskLayer = !this.maskLayer;
+	        	this.hidePosition.position = 'relative';
+	        	this.init();
+	        },
+	        getDate(date){
+	        	this.data.date = date;
+	        	this._replace();
+	        },
+	        getType(type){
+	        	this.data.type = type;
+	        	this._replace();
+	        },
+	        getSort(sort){
+	        	this.data.sort = sort;
+	        	this._replace();
+	        },
+	       	getSpe(spe){
+	        	this.data.spe = spe;
+	        	this._replace();
+	        },
+	    },
+	    watch:{
+	    	'maskLayer':function(el){
+	    		if(el){
+	    			this.hidePosition.position = 'fixed';
+			    	document.addEventListener('touchmove',function(e){
+			    		if(e.target.className==='maskLayer'){
+			    			return false
+			    		}
+			    	})
+	    		}
+	    	}
+	    }
+    }
+
+</script>
+
+<style scoped>
+	.rank{
+		background: #fff;
+		height: 100%;
+	}
+	.maskLayer{
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		background: rgba(67,67,67,0.50);
+		z-index: 10;
+		top:44px;
+	}
+	.rank-li{
+		height: 38px;
+		line-height: 38px;
+		font-size: 14px;
+		border-bottom:1px solid  #D8D8D8;
+		color: #323232;
+		display: flex;
+		text-align: center;
+	}
+	.rank-li span{
+		flex: 1;
+		display: inline-block;
+	}
+	.rank-nav{
+		background: #fff;
+		position: fixed;
+		z-index: 10;
+		top:44px;
+		width: 100%;
+	}
+	.rank-tab{
+		background: #fff;
+		position: fixed;
+		z-index: 8;
+		top: 83px;
+		width: 100%;
+	}
+	.rank-tab.rank-li{
+		font-size: 13px;
+		color: #7E7E7E;
+	}
+	.rank-tab .rank-icon{
+		flex: .4
+	}
+	.rank-nav.rank-li p{
+		flex: 1;
+		font-size: 12px;
+		transform: scale(.8);
+		line-height: 1.8;
+	}
+    .rank-nav .clb:after{
+        content: '>';
+        transform: rotate(90deg) scaleY(1.5) scaleX(.8);
+        position: relative;
+        display: inline-block;
+        left: 5px;
+        color: rgba(000,000,000,.5);
+        transition: all .5s;
+    }
+    .rank-nav .clt, .rank-nav.rank-li .clt:after{
+    	color: #FF5C00;
+    }
+    .rank-nav .clb, .rank-nav .clt{
+    	transition: all .5s;
+    }
+    .rank-nav .clt:after{
+        content: '>';
+        transform: rotate(270deg) scaleY(1.5) scaleX(.8);
+        position: relative;
+        display: inline-block;
+        left: 5px;
+        color: rgba(000,000,000,.5);
+        transition: all .5s;
+    }
+    .rank-res{
+    	overflow: hidden;
+    	width: 100%;
+    	position: relative;
+    	top: 0;
+    }
+    .rank-type,.rank-sort,.rank-spe,.rank-calendar{
+    	position: absolute;
+    	z-index: 10;
+    	background: #fff;
+    	width: 100%;
+    	top: 83px;
+    	border-bottom: 1px solid #D8D8D8;
+    	max-height: 350px;
+    	overflow: auto;
+    }
+    .rank-calendar{
+    	position: fixed;
+    	height: calc(100vh - 82px);
+    	max-height: calc(100vh - 82px);
+    }
+</style>

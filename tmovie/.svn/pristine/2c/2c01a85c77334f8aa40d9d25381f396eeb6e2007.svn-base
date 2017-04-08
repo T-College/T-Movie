@@ -1,0 +1,217 @@
+<template>
+	<div>		
+		<div class="cal-interval">
+            <div>
+                <input type="date" v-model = 'nd.startDate'>
+                <h3>开始日期</h3>
+                <div class="cal-interval-div">
+                    <h2>{{nd.startDate|date(2)||d.day}}</h2>
+                    <p><span>{{nd.startDate|date(1)||d.month}}月</span><span>{{nd.startDate|date(0)||d.year}}年</span></p>  
+                </div>
+            </div>      
+            <div>
+                <input type="date" v-model = 'nd.endDate'>
+                <h3>结束日期</h3>
+                <div class="cal-interval-div">
+                    <h2>{{nd.endDate|date(2)||d.day}}</h2>
+                    <p><span>{{nd.endDate|date(1)||d.month}}月</span><span>{{nd.endDate|date(0)||d.year}}年</span></p>  
+                </div>
+            </div>
+        </div>
+        <div class="cal-week">
+            <ul>
+                <li>日</li>
+                <li>一</li>
+                <li>二</li>
+                <li>三</li>
+                <li>四</li>
+                <li>五</li>
+                <li>六</li>
+            </ul>
+        </div>
+        <div class="cal-con">
+            <div class="cal-date">
+                <h3>{{d.year}}年{{d.month+1}}月</h3>
+                <ul>
+                    <li v-for='i in d.day'>
+                        {{i}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="cal-submit">选择</p>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankCalendar',
+    	data(){
+    		return {
+    			d:{
+                    year:'',
+                    month:'',
+                    day:'',
+                    dayArr:[],
+                    frist_day_week:'',
+                },
+                ad:{
+                    year:'',
+                    month:'',
+                    dayArr:[],
+                    dayNow:'',
+                    frist_day_week:'',
+                },
+                nd:{
+                    startDate:'',
+                    endDate:''
+                }
+    		}
+    	},
+        computed: {
+            datetime(){
+                return +new Date()
+            },
+            height(){
+                return document.querySelector
+            }
+        },
+    	mounted(){
+            const da = new Date(this.datetime);
+            this.init(da);
+    	},
+        methods:{
+            init(da){//初始化
+                this.d = {
+                    day:da.getDate(),
+                    month:da.getMonth(),
+                    year:da.getFullYear(),
+                    frist_day_week:this._firstday(),
+                    dayArr:this._ndays()[da.getMonth()],
+                }
+            },
+            _isleap(){//闰年判断
+                let res;
+                return (this.d.year % 100 == 0 ? res = (this.d.year % 400 == 0 ? 1 : 0) : res = (this.d.year % 4 == 0 ? 1 : 0));
+            },
+            _firstday() {//当前月星期几
+                return new Date(this.d.year, (this.d.month), 1).getDay();
+            },
+            _ndays () {//当前月天数
+                return [31, 28 + this._isleap(), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            },
+        },
+    }
+</script>
+
+<style scoped>
+    .cal-interval{
+        height: 106px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: fixed;
+        width: 100%;
+    }
+    .cal-interval:after{
+        content: "";
+        height: 80px;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        width: 1px;
+        background: #E0E0E0;
+    }
+    .cal-interval>div{
+        position: relative;
+        flex:1;
+        box-sizing: border-box;
+    }
+    .cal-interval h3{
+        padding: 13px 0;
+        padding-left: 30px;
+        font-size: 15px;
+        color: #7E7E7E;
+    }
+    .cal-interval .cal-interval-div{
+        box-sizing: border-box;
+        overflow: hidden;
+        clear: both;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cal-interval .cal-interval-div h2{
+        padding-left: 30px;
+        width: 50%;
+        float: left;
+        font-size: 38px;
+        color: #FF5C00;
+        padding-right: 5px;
+        box-sizing: border-box;
+    }
+    .cal-interval .cal-interval-div p {
+        box-sizing: border-box;
+        width: 50%;
+        float: left;
+    }
+    .cal-interval .cal-interval-div p span{
+        line-height: 25px;
+        display: block;
+        font-size: 13px;
+        color: #323232;
+    }
+    .cal-interval input[type='date']{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+    .cal-week{
+        position: fixed;
+        top: 191px;
+        width: 100%;
+    }
+    .cal-week ul{
+        display: flex;
+        background: #EEEEEE;
+        height: 30px;
+        align-items: center;
+    }
+    .cal-week li{
+        text-align: center;
+        flex:1;
+        font-size: 12px;
+        color: #7E7E7E;
+    }
+    .cal-submit{
+        background: #FF8100;
+        line-height: 44px;
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        color: #FFFFFF;
+    }
+    .cal-con{
+        position: absolute;
+        top: 136px;
+        width: 100%;
+        font-size: 14px;
+        color: #323232;
+    }
+    .cal-con .cal-date h3{
+        text-align: center;
+        line-height: 40px;
+    }
+    .cal-con .cal-date ul{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .cal-con .cal-date li{
+        line-height: 40px;
+    }
+</style>

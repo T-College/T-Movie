@@ -1,0 +1,113 @@
+<template>
+	<div>
+    	<ul>
+    		<li v-for="(i,index) in data" class="rank-li">
+            <router-link to="/rankDetail">
+    			<span class="ranking">{{index}}</span>
+    			<span class="lv">{{i.lv}}</span>
+    			<span class="name">{{i.name}}</span>
+    			<span class="res">{{i.res}}</span>
+    			<span class="rank-icon">></span>
+            </router-link>
+    		</li>
+    	</ul>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankRes',
+    	data(){
+    		return {
+    			data:[
+    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			   			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			    			{
+    				lv:'信销一区',
+    				name:'冯学阳',
+    				res:'9,071,000'
+    			},
+    			]
+    		}
+    	},
+        computed: {
+        },
+    	mounted(){
+    	}
+    }
+</script>
+
+<style scoped>
+    .rank-res li a{
+        height: 38px;
+        line-height: 38px;
+        font-size: 14px;
+        border-bottom:1px solid  #D8D8D8;
+        color: #323232;
+        display: flex;
+        text-align: center;
+    }
+    
+    .rank-res li span{
+        flex: 1;
+        display: inline-block;
+    }
+    .rank-res{
+        background: #fff;
+        margin-top: 126px;
+    }
+    .rank-res .rank-icon{
+        color: #323232;
+        opacity: 0;
+        pointer-events:none;
+        flex: none;
+        width: 40px;
+    }
+    .rank-res li.active{
+        color: #FF5C00;
+    }
+
+</style>

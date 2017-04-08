@@ -1,0 +1,84 @@
+<template>
+	<div class="rankDetail">
+        <ul>
+            <li :class="i=='全部'?'active':''" v-for="i in data">
+                <span>{{i.name}}</span>
+                <span>{{i.num}}</span>
+            </li>
+        </ul>
+	</div>
+</template>
+
+<script>
+    export default {
+    	name:'rankSort',
+    	data(){
+    		return {
+                data:[
+                {
+                    name:'进件量',
+                    num:'461',
+                },
+                             {
+                    name:'拒件量',
+                    num:'246',
+                },
+                             {
+                    name:'无效进件',
+                    num:'93',
+                },
+                             {
+                    name:'总部通过量',
+                    num:'122',
+                },
+                             {
+                    name:'审批总金额',
+                    num:'1072,000',
+                },
+                             {
+                    name:'放款总额',
+                    num:'972,000',
+                },
+                                            {
+                    name:'通过率',
+                    num:'39%',
+                },
+                                                            {
+                    name:'放款',
+                    num:'116件',
+                },
+                ]
+    		}
+    	},
+    	mounted(){
+
+    	}
+    }
+</script>
+
+<style scoped>
+    .rankDetail{
+        background: #F2F2F2;
+    }
+    ul{
+        background: #fff;
+    }
+    li{
+        padding:0 30px;
+        font-size: 14px;
+        color: #7E7E7E;
+        line-height: 38px;
+        border-bottom: 1px solid #D8D8D8;
+        display: flex;
+        justify-content: space-between;
+    }
+    li span{
+        flex:1;
+        display: inline-block;
+    }
+    li span:last-child{
+        text-align: right;
+        font-size: 15px;
+        color: #323232;
+    }
+</style>

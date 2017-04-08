@@ -1,0 +1,90 @@
+{
+  "_args": [
+    [
+      "vue-lazyload@^0.8.0",
+      "/Users/william/WebstormProject/dingding/dingding/node_modules/mint-ui"
+    ]
+  ],
+  "_from": "vue-lazyload@>=0.8.0 <0.9.0",
+  "_id": "vue-lazyload@0.8.3",
+  "_inCache": true,
+  "_location": "/vue-lazyload",
+  "_nodeVersion": "6.2.1",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/vue-lazyload-0.8.3.tgz_1476866337504_0.5048141991719604"
+  },
+  "_npmUser": {
+    "email": "hilongjw@qq.com",
+    "name": "imawe"
+  },
+  "_npmVersion": "3.9.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "vue-lazyload",
+    "raw": "vue-lazyload@^0.8.0",
+    "rawSpec": "^0.8.0",
+    "scope": null,
+    "spec": ">=0.8.0 <0.9.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/mint-ui"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-lazyload/-/vue-lazyload-0.8.3.tgz",
+  "_shasum": "7118859eb2e6ed69ee132a80da5507671dc88640",
+  "_shrinkwrap": null,
+  "_spec": "vue-lazyload@^0.8.0",
+  "_where": "/Users/william/WebstormProject/dingding/dingding/node_modules/mint-ui",
+  "author": {
+    "email": "hilongjw@gmail.com",
+    "name": "Awe"
+  },
+  "bugs": {
+    "url": "https://github.com/hilongjw/vue-lazyload/issues"
+  },
+  "dependencies": {
+    "es6-promise": "^3.1.2"
+  },
+  "description": "Vue module for lazy-loading images in your vue.js applications.",
+  "devDependencies": {
+    "babel-cli": "^6.14.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "rollup": "^0.35.10",
+    "rollup-plugin-babel": "^2.6.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "7118859eb2e6ed69ee132a80da5507671dc88640",
+    "tarball": "https://registry.npmjs.org/vue-lazyload/-/vue-lazyload-0.8.3.tgz"
+  },
+  "gitHead": "d03ff5020d876667f770436d25a75fc482729657",
+  "homepage": "https://github.com/hilongjw/vue-lazyload#readme",
+  "installable": true,
+  "keywords": [
+    "lazyload",
+    "vue",
+    "vue-directive",
+    "vue-lazyload"
+  ],
+  "license": "MIT",
+  "main": "vue-lazyload.es5.js",
+  "maintainers": [
+    {
+      "name": "imawe",
+      "email": "hilongjw@qq.com"
+    }
+  ],
+  "name": "vue-lazyload",
+  "optionalDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hilongjw/vue-lazyload.git"
+  },
+  "scripts": {
+    "start": "node build"
+  },
+  "version": "0.8.3"
+}
